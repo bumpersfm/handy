@@ -1,0 +1,16 @@
+PODS:
+  - Handy (0.1.0)
+
+DEPENDENCIES:
+  - Handy (from `../`)
+
+EXTERNAL SOURCES:
+  Handy:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Handy: 8dcc8c512af43a37bae1794dbc0ea6703e0f9238
+
+PODFILE CHECKSUM: 8d6e0e4ccd4d2f80cc097f642f96c9807d42dca1
+
+COCOAPODS: 1.0.1
