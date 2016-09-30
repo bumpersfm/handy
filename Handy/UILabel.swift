@@ -26,8 +26,7 @@ extension UILabel {
         self.text = text
     }
     public convenience init(title: String) {
-        self.init()
-        self.text = title
+        self.init(); self.text = title
     }
     
     public convenience init(title: String, color: UIColor) {

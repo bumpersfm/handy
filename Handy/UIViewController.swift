@@ -13,6 +13,18 @@ extension UIViewController {
         self.init()
         self.view.backgroundColor = color
     }
+
+    public func dismiss(sender: AnyObject? = nil) {
+        self.dismiss(animated: true)
+    }
+
+    public func dismiss(animated animated: Bool) {
+        if self.presentingViewController != nil {
+            self.dismissViewControllerAnimated(animated, completion: nil)
+        } else if let nav = self.navigationController {
+            nav.popViewControllerAnimated(animated)
+        }
+    }
 }
 
 extension UINavigationController {

@@ -11,8 +11,7 @@ import UIKit
 
 extension UIButton {
     public convenience init(title: String) {
-        self.init()
-        self.setTitle(title, forState: .Normal)
+        self.init(); self.setTitle(title, forState: .Normal)
     }
     public convenience init(title: String, font: UIFont) {
         self.init(title: title)
@@ -54,8 +53,7 @@ extension UIButton {
     }
 
     public convenience init(image: UIImage?, selectedImage: UIImage?) {
-        self.init(image: image)
-        self.setImage(selectedImage, forState: .Selected)
+        self.init(image: image); self.setImage(selectedImage, forState: .Selected)
     }
 
     public convenience init(image: UIImage?, contentEdgeInsets: UIEdgeInsets) {
