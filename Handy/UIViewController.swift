@@ -7,11 +7,15 @@
 //
 
 import Foundation
+import UIKit
 
 extension UIViewController {
     public convenience init(color: UIColor) {
-        self.init()
-        self.view.backgroundColor = color
+        self.init(); self.view.backgroundColor = color
+    }
+
+    public convenience init(tabBarItem: UITabBarItem) {
+        self.init(); self.tabBarItem = tabBarItem
     }
 
     public func dismiss(sender: AnyObject? = nil) {

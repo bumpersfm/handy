@@ -8,15 +8,15 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Handy'
-  s.version          = '0.1.1'
-  s.summary          = 'Handy extensions for Swift.'
+  s.version          = '0.1.2'
+  s.summary          = 'Extensions for Swift.'
 
   s.description      = 'Convenience initializers & other extensions.'
 
-  s.homepage         = 'https://dpostigo@bitbucket.org/dpostigo/handy'
+  s.homepage         = 'https://github.com/bumpersfm/handy'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Dani Postigo' => 'dani.postigo@gmail.com' }
-  s.source           = { :git => 'https://dpostigo@bitbucket.org/dpostigo/handy.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/bumpersfm/handy.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/alsoyay'
 
   s.ios.deployment_target = '9.0'

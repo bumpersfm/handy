@@ -18,13 +18,7 @@ extension UIImage {
         return img
     }
 }
-extension UIImageView {
-    public convenience init(color: UIColor) {
-        self.init()
-        self.backgroundColor = color
-        self.opaque = false
-    }
-}
+
 
 // https://twitter.com/sommer/status/750468970361131008
 extension UICollectionView {
@@ -334,6 +328,9 @@ class CircleView: UIView {
     }
 
 }
+
+
+
 //
 //extension UIViewControllerContextTransitioning {
 //

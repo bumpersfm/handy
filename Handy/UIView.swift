@@ -10,11 +10,15 @@ import Foundation
 import UIKit
 
 extension UIView {
-    
+
+    public var width: CGFloat { return self.bounds.size.width }
+    public var height: CGFloat { return self.bounds.size.height }
+
     public convenience init(color: UIColor) {
-        self.init()
-        self.backgroundColor = color
+        self.init(); self.backgroundColor = color
     }
+
+    // MARK: Methods
 
     public func addView(view: UIView, frame: CGRect = CGRectNull) {
         view.frame = frame == CGRectNull ? view.frame : self.bounds
@@ -22,16 +26,14 @@ extension UIView {
         self.addSubview(view)
     }
 
-    public func addSubviews(views: [UIView]) {
-        views.forEach({ self.addView($0) })
-    }
+    public func addSubviews(views: [UIView]) { views.forEach({ self.addView($0) }) }
+    public func removeAllSubviews() { self.subviews.forEach({ $0.removeFromSuperview() }) }
 
-    public func removeAllSubviews() {
-        self.subviews.forEach({ $0.removeFromSuperview() })
+    public func constraintWithIdentifier(identifier: String) -> NSLayoutConstraint? {
+        return self.constraints.with(identifier: identifier)
     }
 
     // MARK: Embed
-
 
     public func embed(view: UIView, identifier: String) {
         self.embed(view, insets: UIEdgeInsets(), identifier: identifier)
@@ -51,5 +53,16 @@ extension UIView {
         view.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor, constant: -insets.bottom).active = true
         view.leadingAnchor.constraintEqualToAnchor(self.leadingAnchor, constant: insets.left).active = true
         view.trailingAnchor.constraintEqualToAnchor(self.trailingAnchor, constant: -insets.right).active = true
+    }
+
+    // MARK: Autolayout
+
+    public var verticalResistancePriority: UILayoutPriority {
+        get { return self.contentCompressionResistancePriorityForAxis(.Vertical) }
+        set { self.setContentCompressionResistancePriority(newValue, forAxis: .Vertical)}
+    }
+
+    public func setResistancePriority(priority: UILayoutPriority, forAxis: UILayoutConstraintAxis) {
+        self.setContentCompressionResistancePriority(priority, forAxis: forAxis)
     }
 }
