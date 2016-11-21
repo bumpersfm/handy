@@ -14,8 +14,12 @@ extension UIViewController {
         self.init(); self.view.backgroundColor = color
     }
 
-    public convenience init(tabBarItem: UITabBarItem) {
-        self.init(); self.tabBarItem = tabBarItem
+    public convenience init(title: String) {
+        self.init(); self.title = title
+    }
+
+    public convenience init(title: String, color: UIColor) {
+        self.init(title: title); self.view.backgroundColor = color
     }
 
     public func dismiss(sender: AnyObject? = nil) {
@@ -28,6 +32,16 @@ extension UIViewController {
         } else if let nav = self.navigationController {
             nav.popViewControllerAnimated(animated)
         }
+    }
+
+    // MARK:
+
+    public func tabBarItem(tabBarItem: UITabBarItem) -> Self {
+        self.tabBarItem = tabBarItem; return self
+    }
+
+    public func withTitle(title: String) -> Self {
+        self.title = title; return self
     }
 }
 

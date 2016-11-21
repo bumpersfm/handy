@@ -38,4 +38,8 @@ extension UIStackView {
     public func addArrangedSubviews(views: [UIView]) {
         views.forEach(addArrangedSubview)
     }
+
+    public func removeArrangedSubviews(views: [UIView]) {
+        views.forEach(removeArrangedSubview)
+    }
 }
