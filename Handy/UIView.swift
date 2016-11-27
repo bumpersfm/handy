@@ -18,6 +18,10 @@ extension UIView {
         self.init(); self.backgroundColor = color
     }
 
+    public convenience init(frame: CGRect, color: UIColor) {
+        self.init(frame: frame); self.backgroundColor = color
+    }
+
     // MARK: Methods
 
     public func addView(view: UIView, frame: CGRect = CGRectNull) {
@@ -31,6 +35,12 @@ extension UIView {
 
     public func constraintWithIdentifier(identifier: String) -> NSLayoutConstraint? {
         return self.constraints.with(identifier: identifier)
+    }
+
+    // MARK: Animations
+
+    public class func animateWithDuration(duration: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)? = nil) {
+        self.animateWithDuration(duration, delay: 0, options: options, animations: animations, completion: completion)
     }
 
     // MARK: Embed
@@ -64,5 +74,23 @@ extension UIView {
 
     public func setResistancePriority(priority: UILayoutPriority, forAxis: UILayoutConstraintAxis) {
         self.setContentCompressionResistancePriority(priority, forAxis: forAxis)
+    }
+
+    // MARK:
+
+    func set(gesture gesture: UIGestureRecognizer, active: Bool) {
+        if active { self.addGesture(gesture) } else { self.removeGesture(gesture) }
+    }
+
+    public func addGesture(gesture: UIGestureRecognizer) {
+        if !(self.gestureRecognizers ?? []).contains(gesture) {
+            self.addGestureRecognizer(gesture)
+        }
+    }
+
+    public func removeGesture(gesture: UIGestureRecognizer) {
+        if (self.gestureRecognizers ?? []).contains(gesture) {
+            self.removeGestureRecognizer(gesture)
+        }
     }
 }

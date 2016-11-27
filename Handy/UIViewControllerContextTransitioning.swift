@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 extension UIViewControllerContextTransitioning {
     
@@ -41,4 +41,15 @@ extension UIViewControllerContextTransitioning {
     public var fromFinalFrame: CGRect {
         return self.finalFrameForViewController(self.fromViewController!)
     }
+
+
 }
+
+
+extension UIViewControllerAnimatedTransitioning {
+    public func transitionWithContext(context: UIViewControllerContextTransitioning, options: UIViewAnimationOptions = .TransitionCrossDissolve) {
+        context.containerView().addSubview(context.fromView!)
+        UIView.transitionFromView(context.fromView!, toView: context.toView!, duration: self.transitionDuration(context), options: options, completion: { _ in context.completeTransition(true) })
+    }
+}
+

@@ -43,6 +43,11 @@ extension UIViewController {
     public func withTitle(title: String) -> Self {
         self.title = title; return self
     }
+
+
+    public static var stringIdentifier: String {
+        return String(self)
+    }
 }
 
 extension UINavigationController {

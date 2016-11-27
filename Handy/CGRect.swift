@@ -27,6 +27,10 @@ extension CGRect {
         self.size.width = value
         return self
     }
+    public mutating func with(height value: CGFloat) -> CGRect {
+        self.size.height = value
+        return self
+    }
 }
 
 

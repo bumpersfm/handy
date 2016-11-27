@@ -24,9 +24,9 @@ extension UIButton {
     }
 
     public convenience init(title: String, backgroundColor: UIColor) {
-        self.init(title: title)
-        self.backgroundColor = backgroundColor
+        self.init(title: title); self.backgroundColor = backgroundColor
     }
+
     public convenience init(title: String, font: UIFont, color: UIColor, backgroundColor: UIColor) {
         self.init(title: title, font: font, color: color)
         self.backgroundColor = backgroundColor
@@ -37,9 +37,8 @@ extension UIButton {
         self.contentEdgeInsets = contentEdgeInsets
     }
 
-    public convenience init(title: String, color: UIColor) {
-        self.init(title: title)
-        self.setTitleColor(color, forState: .Normal)
+    public convenience init(title: String, titleColor: UIColor) {
+        self.init(title: title); self.setTitleColor(titleColor, forState: .Normal)
     }
 
     public convenience init(attributedTitle: NSAttributedString) {
@@ -65,4 +64,13 @@ extension UIButton {
         self.init()
         self.userInteractionEnabled = userInteractionEnabled
     }
+
+    // MARK:
+
+    public convenience init(title: String, color: UIColor) {
+        self.init(title: title, titleColor: color)
+    }
+
+
+
 }

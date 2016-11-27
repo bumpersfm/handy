@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Handy'
-  s.version          = '0.1.3'
+  s.version          = '0.1.4'
   s.summary          = 'Extensions for Swift.'
 
   s.description      = 'Convenience initializers & other extensions.'
@@ -20,15 +20,24 @@ Pod::Spec.new do |s|
   # s.social_media_url = 'https://twitter.com/alsoyay'
 
   s.ios.deployment_target = '9.0'
+  s.frameworks = 'UIKit', 'Foundation'
 
-  s.source_files = 'Handy/**/*'
+  s.source_files = 'Handy/', 'Components/'
   s.exclude_files = 'Handy/UIKit-Extensions.swift'
-  
-  # s.resource_bundles = {
-  #   'Handy' => ['Handy/Assets/*.png']
-  # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
-  s.frameworks = 'UIKit', 'Foundation'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  # s.resource_bundles = { 'Handy' => ['Handy/Assets/*.png'] }
+
+  s.subspec 'Handy' do |ss|
+    ss.source_files = 'Handy/**/*'
+    # ss.exclude_files = 'Handy/UIKit-Extensions.swift'
+  end
+
+  s.subspec 'Components' do |ss|
+    ss.source_files = 'Components/**/*'
+  end
+
+  # s.default_subspec = 'Handy'
+
 end
+

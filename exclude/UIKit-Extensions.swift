@@ -123,11 +123,6 @@ extension UIView {
 
 // MARK: Autolayout
 
-extension UIView {
-    var height: CGFloat {
-        return self.bounds.size.height
-    }
-}
 //extension UIView {
 //
 //    public func embed(view: UIView, identifier: String) {
@@ -184,22 +179,7 @@ extension UIView {
 //}
 
 extension UIViewController {
-//    convenience init(color: UIColor) {
-//        self.init()
-//        self.view.backgroundColor = color
-//    }
 
-    public func dismiss(sender: AnyObject? = nil) {
-        self.dismiss(animated: true)
-    }
-
-    public func dismiss(animated animated: Bool) {
-        if self.presentingViewController != nil {
-            self.dismissViewControllerAnimated(animated, completion: nil)
-        } else if let nav = self.navigationController {
-            nav.popViewControllerAnimated(animated)
-        }
-    }
     //public func embed(view: UIView, identifier: String = "") {
     //self.embed(view, insets: UIEdgeInsets(), identifier: identifier)
     //}
