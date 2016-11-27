@@ -1,6 +1,5 @@
 //
-// Created by Dani Postigo on 9/28/16.
-// Copyright (c) 2016 TokBox. All rights reserved.
+// Created by Dani Postigo on 11/27/16.
 //
 
 import Foundation
