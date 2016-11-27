@@ -5,20 +5,20 @@
 import Foundation
 import UIKit
 
-@objc public protocol NotificationViewDelegate: class {
-    optional func notificationTapped(notification: NotificationView)
-    optional func notificationWillPresent(notification: NotificationView)
-    optional func notificationPresented(notification: NotificationView)
-    optional func notificationWillAnimate(notification: NotificationView)
-    optional func notificationDismissed(notification: NotificationView)
+
+@objc public protocol NotificationWindowDelegate: class {
+    optional func notificationTapped(notification: NotificationWindow)
+    optional func notificationWillPresent(notification: NotificationWindow)
+    optional func notificationPresented(notification: NotificationWindow)
+    optional func notificationWillAnimate(notification: NotificationWindow)
+    optional func notificationDismissed(notification: NotificationWindow)
 }
 
-public class NotificationView: UIView {
+public class NotificationWindow: UIWindow {
 
     public var presented: Bool = false
     public var dismissOnTap: Bool = false
-    public weak var delegate: NotificationViewDelegate? = nil
-
+    public weak var delegate: NotificationWindowDelegate? = nil
 
     private let contentView: UIView
     private(set)var size: CGSize = CGSize.zero
@@ -31,38 +31,38 @@ public class NotificationView: UIView {
         super.init(frame: self.contentView.bounds)
         self.size = self.contentView.frame.size
         self.embed(self.contentView)
-        self.heightAnchor.constraintEqualToConstant(size.height).active = true
+        self.windowLevel = App.keyWindow?.windowLevel ?? UIWindowLevelNormal
+        self.addGesture(UITapGestureRecognizer(target: self, action: #selector(tapped(_:))))
     }
 
     // MARK: Show / hide
 
-    public func show(inView window: UIView, animated: Bool = false, completion: Block? = nil, duration: NSTimeInterval = 0.4) {
+    public func show(inView window: UIView, animated: Bool = false, completion: Block? = nil, options: AnimationOptions) {
         self.add(toView: window)
-        self.show(animated: animated, completion: completion, duration: duration)
+        self.show(animated: animated, completion: completion, options: options)
     }
 
-    public func show(inViewController vc: UIViewController, animated: Bool = false, completion: Block? = nil, duration: NSTimeInterval = 0.4) {
+    public func show(inViewController vc: UIViewController, animated: Bool = false, completion: Block? = nil, options: AnimationOptions) {
         self.add(toViewController: vc)
-        self.show(animated: animated, completion: completion, duration: duration)
+        self.show(animated: animated, completion: completion, options: options)
     }
 
-    public func show(animated animated: Bool = false, completion: Block? = nil, duration: NSTimeInterval = 0.4) {
-        guard let window = self.superview else { return }
+    public func show(animated animated: Bool = false, options: AnimationOptions = AnimationOptions(duration: 0.4, options: .CurveEaseInOut), completion: Block? = nil) {
+        guard self.superview != nil else { return }
         self.constraint?.constant = self.size.height
         guard animated else { self.presented(completion: completion); return }
 
-        UIView.animateWithDuration(duration, options: .CurveEaseInOut,
+        UIView.animateWithOptions(options,
             animations: { self.superview?.layoutIfNeeded() },
             completion: { _ in self.presented(completion: completion) })
     }
 
     public func hide(animated animated: Bool = false, completion: Block? = nil) {
-        self.constraint?.constant = 0
         self.delegate?.notificationWillAnimate?(self)
         guard animated else { self.dismissed(completion: completion); return }
-        UIView.animateWithDuration(0.45,
-            animations: { self.superview?.layoutIfNeeded() },
-            completion: { _ in self.removeFromSuperview(); self.dismissed(completion: completion) })
+        UIView.transitionWithView(self, duration: 0.45, options: .CurveEaseInOut,
+            animations: { self.hidden = true },
+            completion: { _ in self.dismissed(completion: completion) })
     }
 
     // MARK: Actions
@@ -78,12 +78,12 @@ public class NotificationView: UIView {
 
     private func presented(completion completion: Block? = nil) {
         self.presented = true
-        self.addGesture(UITapGestureRecognizer(target: self, action: #selector(tapped(_:))))
         self.delegate?.notificationPresented?(self); completion?()
     }
 
     private func dismissed(completion completion: Block? = nil) {
         self.presented = false
+        self.hidden = true
         self.delegate?.notificationDismissed?(self); completion?()
     }
 
@@ -115,5 +115,6 @@ public class NotificationView: UIView {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 
 }
