@@ -36,8 +36,8 @@ extension UIViewController {
 
     // MARK:
 
-    public func tabBarItem(tabBarItem: UITabBarItem) -> Self {
-        self.tabBarItem = tabBarItem; return self
+    public func tabBarItem(tabBarItem: UITabBarItem? = nil) -> Self {
+        self.tabBarItem = tabBarItem ?? UITabBarItem(title: self.title ?? ""); return self
     }
 
     public func withTitle(title: String) -> Self {

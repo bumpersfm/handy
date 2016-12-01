@@ -11,4 +11,12 @@ extension UINavigationBar {
         let adjustment = self.frame.size.height - titleView.frame.size.height
         self.setTitleVerticalPositionAdjustment(adjustment * -0.5, forBarMetrics: .Default)
     }
+    
+    public func center(barButtonItem item: UIBarButtonItem?) {
+        guard let item = item else { return }
+        let diff = self.frame.size.height - 44
+        let adjustment = diff * 0.5
+        item.setBackgroundVerticalPositionAdjustment(diff > 0 ? -adjustment : 0, forBarMetrics: .Default)
+    
+    }
 }

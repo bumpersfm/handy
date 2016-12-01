@@ -5,7 +5,6 @@
 import Foundation
 import UIKit
 
-
 @objc public protocol NotificationWindowDelegate: class {
     optional func notificationTapped(notification: NotificationWindow)
     optional func notificationWillPresent(notification: NotificationWindow)
@@ -20,34 +19,40 @@ public class NotificationWindow: UIWindow {
     public var dismissOnTap: Bool = false
     public weak var delegate: NotificationWindowDelegate? = nil
 
-    private let contentView: UIView
-    private(set)var size: CGSize = CGSize.zero
+    public private(set) var contentView: UIView = UIView() { didSet { self.update(contentView: oldValue) } }
+    private(set) var size: CGSize = CGSize.zero
     private var constraint: NSLayoutConstraint?
 
     // MARK: Init
-
-    public init(withView contentView: UIView) {
-        self.contentView = contentView
-        super.init(frame: self.contentView.bounds)
-        self.size = self.contentView.frame.size
-        self.embed(self.contentView)
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
+        Swift.print("NotificationWindow.\(#function)")
         self.windowLevel = App.keyWindow?.windowLevel ?? UIWindowLevelNormal
         self.addGesture(UITapGestureRecognizer(target: self, action: #selector(tapped(_:))))
     }
-
+    
     // MARK: Show / hide
 
     public func show(inView window: UIView, animated: Bool = false, completion: Block? = nil, options: AnimationOptions) {
         self.add(toView: window)
-        self.show(animated: animated, completion: completion, options: options)
+        self.show(animated: animated, options: options, completion: completion)
     }
 
     public func show(inViewController vc: UIViewController, animated: Bool = false, completion: Block? = nil, options: AnimationOptions) {
         self.add(toViewController: vc)
-        self.show(animated: animated, completion: completion, options: options)
+        self.show(animated: animated, options: options, completion: completion)
     }
-
-    public func show(animated animated: Bool = false, options: AnimationOptions = AnimationOptions(duration: 0.4, options: .CurveEaseInOut), completion: Block? = nil) {
+    
+    public func show(animated animated: Bool = false, completion: Block? = nil) {
+        self.show(animated: animated, options: AnimationOptions(duration: 0.4, options: .CurveEaseInOut), completion: completion)
+    }
+    
+    public func show(animated animated: Bool = false, options: AnimationOptions, completion: Block? = nil) {
         guard self.superview != nil else { return }
         self.constraint?.constant = self.size.height
         guard animated else { self.presented(completion: completion); return }
@@ -67,7 +72,7 @@ public class NotificationWindow: UIWindow {
 
     // MARK: Actions
 
-    func tapped(sender: AnyObject? = nil) {
+    public func tapped(sender: AnyObject? = nil) {
         self.delegate?.notificationTapped?(self)
         guard self.dismissOnTap else { return }
         self.hide(animated: true)
@@ -109,12 +114,22 @@ public class NotificationWindow: UIWindow {
         self.superview?.layoutIfNeeded()
         self.delegate?.notificationWillAnimate?(self)
     }
-
-    // MARK:
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    
+    // MARK: Private methods
+    
+    private func update(contentView oldValue: UIView) {
+        oldValue.removeFromSuperview()
+        self.size = self.contentView.frame.size
+        self.embed(self.contentView)
     }
 
-
+    // MARK: Convenience
+    
+    convenience public init(withView contentView: UIView) {
+        self.init(frame: contentView.bounds)
+        Swift.print("NotificationWindow.\(#function)")
+        ({ self.contentView = contentView })()
+    }
+    
+    
 }

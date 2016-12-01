@@ -25,7 +25,7 @@ extension UIView {
     // MARK: Methods
 
     public func addView(view: UIView, frame: CGRect = CGRectNull) {
-        view.frame = frame == CGRectNull ? view.frame : self.bounds
+        view.frame = frame == CGRectNull ? (view.frame == CGRect.zero ? self.bounds : view.frame) : self.bounds
         view.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(view)
     }

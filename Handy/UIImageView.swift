@@ -10,4 +10,8 @@ extension UIImageView {
         self.init(); self.backgroundColor = color
         self.opaque = false
     }
+    
+    public convenience init(image: UIImage?, contentMode: UIViewContentMode) {
+        self.init(image: image); self.contentMode = contentMode
+    }
 }
