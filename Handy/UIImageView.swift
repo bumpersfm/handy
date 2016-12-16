@@ -7,11 +7,14 @@ import UIKit
 
 extension UIImageView {
     public convenience init(color: UIColor) {
-        self.init(); self.backgroundColor = color
-        self.opaque = false
+        self.init(); self.backgroundColor = color; self.opaque = false
     }
     
     public convenience init(image: UIImage?, contentMode: UIViewContentMode) {
         self.init(image: image); self.contentMode = contentMode
+    }
+    
+    convenience init(image: UIImage, renderingColor: UIColor) {
+        self.init(image: image.imageWithRenderingMode(.AlwaysTemplate)); self.tintColor = renderingColor
     }
 }

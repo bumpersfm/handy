@@ -11,44 +11,24 @@ import UIKit
 
 extension UILabel {
     public convenience init(font: UIFont, color: UIColor = UIColor.blackColor()) {
-        self.init()
-        self.font = font
-        self.textColor = color
+        self.init(); self.font = font; self.textColor = color
     }
     
     public convenience init(color: UIColor) {
+        self.init(); self.textColor = color
+    }
+    
+    public convenience init(text: String) { self.init(title: text) }
+    
+    public convenience init(title: String, font: UIFont? = nil, color: UIColor? = nil) {
         self.init()
-        self.textColor = color
-    }
-    
-    public convenience init(text: String) {
-        self.init()
-        self.text = text
-    }
-    public convenience init(title: String) {
-        self.init(); self.text = title
-    }
-    
-    public convenience init(title: String, color: UIColor) {
-        self.init(title: title)
-        self.textColor = color
-    }
-    public convenience init(title: String, color: UIColor, font: UIFont) {
-        self.init(title: title, color: color)
+        self.text = title
         self.font = font
-    }
-    
-    public convenience init(title: String, font: UIFont) {
-        self.init(title: title)
-        self.font = font
-    }
-    public convenience init(title: String, font: UIFont, color: UIColor) {
-        self.init(title: title, font: font)
         self.textColor = color
     }
+  
     public convenience init(attributedText: NSAttributedString) {
-        self.init()
-        self.attributedText = attributedText
+        self.init(); self.attributedText = attributedText
     }
     
     public convenience init(title: String, attributes: [String:AnyObject]) {
