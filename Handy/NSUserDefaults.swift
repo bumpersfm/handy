@@ -11,6 +11,7 @@ extension NSUserDefaults {
     }
 
     public func setObject<T: RawRepresentable where T.RawValue == String>(value: AnyObject?, forKey type: T) {
+        guard let value = value else { self.removeObjectForKey(type); return }
         self.setObject(value, forKey: type.rawValue)
     }
 
@@ -20,6 +21,10 @@ extension NSUserDefaults {
 
     public func objectForKey<T: RawRepresentable where T.RawValue == String>(type: T) -> AnyObject? {
         return self.objectForKey(type.rawValue)
+    }
+    
+    public func removeObjectForKey<T: RawRepresentable where T.RawValue == String>(type: T) {
+        self.removeObjectForKey(type.rawValue)
     }
 }
 
