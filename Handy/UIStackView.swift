@@ -10,14 +10,29 @@ import Foundation
 import UIKit
 
 extension UIStackView {
+    public convenience init(axis: UILayoutConstraintAxis) {
+        self.init(); self.axis = axis
+    }
 
-    public convenience init(axis: UILayoutConstraintAxis, alignment: UIStackViewAlignment = .Fill, distribution: UIStackViewDistribution = .Fill, views: [UIView] = [], spacing: CGFloat = 10) {
-        self.init()
-        self.axis = axis
-        self.alignment = alignment
-        self.distribution = distribution
-        self.spacing = spacing
+    public convenience init(axis: UILayoutConstraintAxis, views: [UIView]) {
+        self.init(axis: axis)
         self.addArrangedSubviews(views)
+    }
+
+    public convenience init(axis: UILayoutConstraintAxis, spacing: CGFloat) {
+        self.init(axis: axis)
+        self.spacing = spacing
+    }
+
+    public convenience init(axis: UILayoutConstraintAxis, spacing: CGFloat, alignment: UIStackViewAlignment) {
+        self.init(axis: axis, spacing: spacing); self.alignment = alignment
+    }
+    
+    public convenience init(axis: UILayoutConstraintAxis, alignment: UIStackViewAlignment) {
+        self.init(axis: axis); self.alignment = alignment
+    }
+    public convenience init(axis: UILayoutConstraintAxis, alignment: UIStackViewAlignment, distribution: UIStackViewDistribution) {
+        self.init(axis: axis, alignment: alignment); self.distribution = distribution
     }
     
     public func addArrangedSubviews(views: [UIView]) {
