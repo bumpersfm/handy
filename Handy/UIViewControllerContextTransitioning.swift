@@ -12,34 +12,34 @@ import UIKit
 extension UIViewControllerContextTransitioning {
     
     public var toView: UIView? {
-        return self.viewForKey(UITransitionContextToViewKey)
+        return self.view(forKey: UITransitionContextViewKey.to)
     }
     public var toViewController: UIViewController? {
-        return self.viewControllerForKey(UITransitionContextToViewControllerKey)
+        return self.viewController(forKey: UITransitionContextViewControllerKey.to)
     }
     
     public var toInitialFrame: CGRect {
-        return self.initialFrameForViewController(self.toViewController!)
+        return self.initialFrame(for: self.toViewController!)
     }
     
     public var toFinalFrame: CGRect {
-        return self.finalFrameForViewController(self.toViewController!)
+        return self.finalFrame(for: self.toViewController!)
     }
     
     public var fromView: UIView? {
-        return self.viewForKey(UITransitionContextFromViewKey)
+        return self.view(forKey: UITransitionContextViewKey.from)
     }
     
     public var fromViewController: UIViewController? {
-        return self.viewControllerForKey(UITransitionContextFromViewControllerKey)
+        return self.viewController(forKey: UITransitionContextViewControllerKey.from)
     }
     
     public var fromInitialFrame: CGRect {
-        return self.initialFrameForViewController(self.fromViewController!)
+        return self.initialFrame(for: self.fromViewController!)
     }
     
     public var fromFinalFrame: CGRect {
-        return self.finalFrameForViewController(self.fromViewController!)
+        return self.finalFrame(for: self.fromViewController!)
     }
 
 
@@ -47,9 +47,9 @@ extension UIViewControllerContextTransitioning {
 
 
 extension UIViewControllerAnimatedTransitioning {
-    public func transitionWithContext(context: UIViewControllerContextTransitioning, options: UIViewAnimationOptions = .TransitionCrossDissolve) {
-        context.containerView().addSubview(context.fromView!)
-        UIView.transitionFromView(context.fromView!, toView: context.toView!, duration: self.transitionDuration(context), options: options, completion: { _ in context.completeTransition(true) })
+    public func transitionWithContext(_ context: UIViewControllerContextTransitioning, options: UIViewAnimationOptions = .transitionCrossDissolve) {
+        context.containerView.addSubview(context.fromView!)
+        UIView.transition(from: context.fromView!, to: context.toView!, duration: self.transitionDuration(using: context), options: options, completion: { _ in context.completeTransition(true) })
     }
 }
 

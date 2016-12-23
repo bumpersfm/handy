@@ -35,11 +35,11 @@ extension UIStackView {
         self.init(axis: axis, alignment: alignment); self.distribution = distribution
     }
     
-    public func addArrangedSubviews(views: [UIView]) {
+    public func addArrangedSubviews(_ views: [UIView]) {
         views.forEach(addArrangedSubview)
     }
 
-    public func removeArrangedSubviews(views: [UIView]) {
+    public func removeArrangedSubviews(_ views: [UIView]) {
         views.forEach(removeArrangedSubview)
     }
 }

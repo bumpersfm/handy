@@ -10,19 +10,19 @@ import Foundation
 import UIKit
 
 extension NSLayoutConstraint {
-    public func identifier(identifier: String) -> Self {
+    public func identifier(_ identifier: String) -> Self {
         self.identifier = identifier
         return self
     }
     
-    public func priority(priority: UILayoutPriority) -> Self {
+    public func priority(_ priority: UILayoutPriority) -> Self {
         self.priority = priority
         return self
     }
 }
 
 extension Array where Element: NSLayoutConstraint {
-    public func with(identifier identifier: String) -> NSLayoutConstraint? {
+    public func with(identifier: String) -> NSLayoutConstraint? {
         return self.take({ $0.identifier == identifier })
     }
 }

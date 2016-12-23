@@ -5,10 +5,10 @@
 import Foundation
 import UIKit
 
-public typealias JSON = [String: AnyObject]
-public typealias Block = Void -> Void
-public typealias Completion = Void -> Void
-public typealias Failure = NSError -> Void
+public typealias JSON = [String: Any]
+public typealias Block = (Void) -> Void
+public typealias Completion = (Void) -> Void
+public typealias Failure = (NSError) -> Void
 
 
-public let App = UIApplication.sharedApplication()
+public let App = UIApplication.shared

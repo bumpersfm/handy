@@ -12,11 +12,11 @@ extension UIBarButtonItem {
     }
 
     public convenience init(image: UIImage?, target: AnyObject? = nil, action: Selector? = nil) {
-        self.init(image: image, style: .Plain, target: target, action: action ?? nil)
+        self.init(image: image, style: .plain, target: target, action: action ?? nil)
     }
 
     public convenience init(title: String?, target: AnyObject? = nil, action: Selector? = nil) {
-        self.init(title: title, style: .Plain, target: target, action: action ?? nil)
+        self.init(title: title, style: .plain, target: target, action: action ?? nil)
     }
 
     public convenience init(customView: UIView, target: AnyObject?, action: Selector) {

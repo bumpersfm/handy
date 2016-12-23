@@ -24,71 +24,71 @@ extension UIView {
 
     // MARK: Methods
 
-    public func addView(view: UIView, frame: CGRect = CGRectNull) {
-        view.frame = frame == CGRectNull ? (view.frame == CGRect.zero ? self.bounds : view.frame) : self.bounds
+    public func addView(_ view: UIView, frame: CGRect = CGRect.null) {
+        view.frame = frame == CGRect.null ? (view.frame == CGRect.zero ? self.bounds : view.frame) : self.bounds
         view.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(view)
     }
 
-    public func addSubviews(views: [UIView]) { views.forEach({ self.addView($0) }) }
+    public func addSubviews(_ views: [UIView]) { views.forEach({ self.addView($0) }) }
     public func removeAllSubviews() { self.subviews.forEach({ $0.removeFromSuperview() }) }
 
-    public func constraintWithIdentifier(identifier: String) -> NSLayoutConstraint? {
+    public func constraintWithIdentifier(_ identifier: String) -> NSLayoutConstraint? {
         return self.constraints.with(identifier: identifier)
     }
 
     // MARK: Animations
 
-    public class func animateWithDuration(duration: NSTimeInterval, options: UIViewAnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)? = nil) {
-        self.animateWithDuration(duration, delay: 0, options: options, animations: animations, completion: completion)
+    public class func animateWithDuration(_ duration: TimeInterval, options: UIViewAnimationOptions, animations: @escaping () -> Void, completion: ((Bool) -> Void)? = nil) {
+        self.animate(withDuration: duration, delay: 0, options: options, animations: animations, completion: completion)
     }
 
     // MARK: Embed
 
-    public func embed(view: UIView, identifier: String) {
+    public func embed(_ view: UIView, identifier: String) {
         self.embed(view, insets: UIEdgeInsets(), identifier: identifier)
     }
 
-    public func embed(view: UIView, insets: UIEdgeInsets, identifier: String) {
+    public func embed(_ view: UIView, insets: UIEdgeInsets, identifier: String) {
         self.addView(view, frame: self.bounds)
-        view.topAnchor.constraintEqualToAnchor(self.topAnchor, constant: insets.top).identifier("\(identifier)top").active = true
-        view.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor, constant: -insets.bottom).identifier("\(identifier)bottom").active = true
-        view.leadingAnchor.constraintEqualToAnchor(self.leadingAnchor, constant: insets.left).identifier("\(identifier)leading").active = true
-        view.trailingAnchor.constraintEqualToAnchor(self.trailingAnchor, constant: -insets.right).identifier("\(identifier)trailing").active = true
+        view.topAnchor.constraint(equalTo: self.topAnchor, constant: insets.top).identifier("\(identifier)top").isActive = true
+        view.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -insets.bottom).identifier("\(identifier)bottom").isActive = true
+        view.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: insets.left).identifier("\(identifier)leading").isActive = true
+        view.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -insets.right).identifier("\(identifier)trailing").isActive = true
     }
 
-    public func embed(view: UIView, insets: UIEdgeInsets = UIEdgeInsets()) {
+    public func embed(_ view: UIView, insets: UIEdgeInsets = UIEdgeInsets()) {
         self.addView(view, frame: self.bounds)
-        view.topAnchor.constraintEqualToAnchor(self.topAnchor, constant: insets.top).active = true
-        view.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor, constant: -insets.bottom).active = true
-        view.leadingAnchor.constraintEqualToAnchor(self.leadingAnchor, constant: insets.left).active = true
-        view.trailingAnchor.constraintEqualToAnchor(self.trailingAnchor, constant: -insets.right).active = true
+        view.topAnchor.constraint(equalTo: self.topAnchor, constant: insets.top).isActive = true
+        view.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -insets.bottom).isActive = true
+        view.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: insets.left).isActive = true
+        view.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -insets.right).isActive = true
     }
 
     // MARK: Autolayout
 
     public var verticalResistancePriority: UILayoutPriority {
-        get { return self.contentCompressionResistancePriorityForAxis(.Vertical) }
-        set { self.setContentCompressionResistancePriority(newValue, forAxis: .Vertical)}
+        get { return self.contentCompressionResistancePriority(for: .vertical) }
+        set { self.setContentCompressionResistancePriority(newValue, for: .vertical)}
     }
 
-    public func setResistancePriority(priority: UILayoutPriority, forAxis: UILayoutConstraintAxis) {
-        self.setContentCompressionResistancePriority(priority, forAxis: forAxis)
+    public func setResistancePriority(_ priority: UILayoutPriority, forAxis: UILayoutConstraintAxis) {
+        self.setContentCompressionResistancePriority(priority, for: forAxis)
     }
 
     // MARK:
 
-    func set(gesture gesture: UIGestureRecognizer, active: Bool) {
+    func set(gesture: UIGestureRecognizer, active: Bool) {
         if active { self.addGesture(gesture) } else { self.removeGesture(gesture) }
     }
 
-    public func addGesture(gesture: UIGestureRecognizer) {
+    public func addGesture(_ gesture: UIGestureRecognizer) {
         if !(self.gestureRecognizers ?? []).contains(gesture) {
             self.addGestureRecognizer(gesture)
         }
     }
 
-    public func removeGesture(gesture: UIGestureRecognizer) {
+    public func removeGesture(_ gesture: UIGestureRecognizer) {
         if (self.gestureRecognizers ?? []).contains(gesture) {
             self.removeGestureRecognizer(gesture)
         }

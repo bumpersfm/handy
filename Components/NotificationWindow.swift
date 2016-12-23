@@ -6,22 +6,22 @@ import Foundation
 import UIKit
 
 @objc public protocol NotificationWindowDelegate: class {
-    optional func notificationTapped(notification: NotificationWindow)
-    optional func notificationWillPresent(notification: NotificationWindow)
-    optional func notificationPresented(notification: NotificationWindow)
-    optional func notificationWillAnimate(notification: NotificationWindow)
-    optional func notificationDismissed(notification: NotificationWindow)
+    @objc optional func notificationTapped(_ notification: NotificationWindow)
+    @objc optional func notificationWillPresent(_ notification: NotificationWindow)
+    @objc optional func notificationPresented(_ notification: NotificationWindow)
+    @objc optional func notificationWillAnimate(_ notification: NotificationWindow)
+    @objc optional func notificationDismissed(_ notification: NotificationWindow)
 }
 
-public class NotificationWindow: UIWindow {
+open class NotificationWindow: UIWindow {
 
-    public var presented: Bool = false
-    public var dismissOnTap: Bool = false
-    public weak var delegate: NotificationWindowDelegate? = nil
+    open var presented: Bool = false
+    open var dismissOnTap: Bool = false
+    open weak var delegate: NotificationWindowDelegate? = nil
 
-    public private(set) var contentView: UIView = UIView() { didSet { self.update(contentView: oldValue) } }
-    private(set) var size: CGSize = CGSize.zero
-    private var constraint: NSLayoutConstraint?
+    open fileprivate(set) var contentView: UIView = UIView() { didSet { self.update(contentView: oldValue) } }
+    fileprivate(set) var size: CGSize = CGSize.zero
+    fileprivate var constraint: NSLayoutConstraint?
 
     // MARK: Init
     
@@ -38,21 +38,21 @@ public class NotificationWindow: UIWindow {
     
     // MARK: Show / hide
 
-    public func show(inView window: UIView, animated: Bool = false, completion: Block? = nil, options: AnimationOptions) {
+    open func show(inView window: UIView, animated: Bool = false, completion: Block? = nil, options: AnimationOptions) {
         self.add(toView: window)
         self.show(animated: animated, options: options, completion: completion)
     }
 
-    public func show(inViewController vc: UIViewController, animated: Bool = false, completion: Block? = nil, options: AnimationOptions) {
+    open func show(inViewController vc: UIViewController, animated: Bool = false, completion: Block? = nil, options: AnimationOptions) {
         self.add(toViewController: vc)
         self.show(animated: animated, options: options, completion: completion)
     }
     
-    public func show(animated animated: Bool = false, completion: Block? = nil) {
-        self.show(animated: animated, options: AnimationOptions(duration: 0.4, options: .CurveEaseInOut), completion: completion)
+    open func show(animated: Bool = false, completion: Block? = nil) {
+        self.show(animated: animated, options: AnimationOptions(duration: 0.4, options: UIViewAnimationOptions()), completion: completion)
     }
     
-    public func show(animated animated: Bool = false, options: AnimationOptions, completion: Block? = nil) {
+    open func show(animated: Bool = false, options: AnimationOptions, completion: Block? = nil) {
         guard self.superview != nil else { return }
         self.constraint?.constant = self.size.height
         guard animated else { self.presented(completion: completion); return }
@@ -62,17 +62,17 @@ public class NotificationWindow: UIWindow {
             completion: { _ in self.presented(completion: completion) })
     }
 
-    public func hide(animated animated: Bool = false, completion: Block? = nil) {
+    open func hide(animated: Bool = false, completion: Block? = nil) {
         self.delegate?.notificationWillAnimate?(self)
         guard animated else { self.dismissed(completion: completion); return }
-        UIView.transitionWithView(self, duration: 0.45, options: .CurveEaseInOut,
-            animations: { self.hidden = true },
+        UIView.transition(with: self, duration: 0.45, options: UIViewAnimationOptions(),
+            animations: { self.isHidden = true },
             completion: { _ in self.dismissed(completion: completion) })
     }
 
     // MARK: Actions
 
-    public func tapped(sender: AnyObject? = nil) {
+    open func tapped(_ sender: AnyObject? = nil) {
         self.delegate?.notificationTapped?(self)
         guard self.dismissOnTap else { return }
         self.hide(animated: true)
@@ -81,43 +81,43 @@ public class NotificationWindow: UIWindow {
 
     // MARK: Event handlers
 
-    private func presented(completion completion: Block? = nil) {
+    fileprivate func presented(completion: Block? = nil) {
         self.presented = true
         self.delegate?.notificationPresented?(self); completion?()
     }
 
-    private func dismissed(completion completion: Block? = nil) {
+    fileprivate func dismissed(completion: Block? = nil) {
         self.presented = false
-        self.hidden = true
+        self.isHidden = true
         self.delegate?.notificationDismissed?(self); completion?()
     }
 
     // MARK: Convenience
 
-    private func add(toViewController vc: UIViewController) {
+    fileprivate func add(toViewController vc: UIViewController) {
         self.add(toView: vc.view, topAnchor: vc.topLayoutGuide.topAnchor)
     }
 
-    private func add(toView window: UIView) {
+    fileprivate func add(toView window: UIView) {
         self.add(toView: window, topAnchor: window.topAnchor)
     }
 
-    private func add(toView window: UIView, topAnchor: NSLayoutAnchor) {
+    fileprivate func add(toView window: UIView, topAnchor: NSLayoutYAxisAnchor) {
         self.frame.size.width = window.bounds.size.width
         window.addView(self)
 
         self.delegate?.notificationWillPresent?(self)
-        self.leadingAnchor.constraintEqualToAnchor(window.leadingAnchor).active = true
-        self.trailingAnchor.constraintEqualToAnchor(window.trailingAnchor).active = true
-        self.constraint = self.bottomAnchor.constraintEqualToAnchor(topAnchor)
-        self.constraint?.active = true
+        self.leadingAnchor.constraint(equalTo: window.leadingAnchor).isActive = true
+        self.trailingAnchor.constraint(equalTo: window.trailingAnchor).isActive = true
+        self.constraint = self.bottomAnchor.constraint(equalTo: topAnchor as! NSLayoutAnchor<NSLayoutYAxisAnchor>)
+        self.constraint?.isActive = true
         self.superview?.layoutIfNeeded()
         self.delegate?.notificationWillAnimate?(self)
     }
     
     // MARK: Private methods
     
-    private func update(contentView oldValue: UIView) {
+    fileprivate func update(contentView oldValue: UIView) {
         oldValue.removeFromSuperview()
         self.size = self.contentView.frame.size
         self.embed(self.contentView)

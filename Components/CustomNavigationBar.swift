@@ -6,18 +6,18 @@ import Foundation
 import UIKit
 
 
-public class CustomNavigationBar: UINavigationBar {
+open class CustomNavigationBar: UINavigationBar {
     
-    public var customHeight: CGFloat = 44 {
+    open var customHeight: CGFloat = 44 {
         didSet { self.frame.size.height = self.customHeight; self.invalidateIntrinsicContentSize() }
     }
     
-    override public func intrinsicContentSize() -> CGSize {
+    override open var intrinsicContentSize : CGSize {
         return CGSize(width: UIViewNoIntrinsicMetric, height: self.customHeight)
     }
     
-    override public func sizeThatFits(size: CGSize) -> CGSize {
-        return CGSize(width: super.sizeThatFits(size).width, height: self.intrinsicContentSize().height)
+    override open func sizeThatFits(_ size: CGSize) -> CGSize {
+        return CGSize(width: super.sizeThatFits(size).width, height: self.intrinsicContentSize.height)
     }
     
 }

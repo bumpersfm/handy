@@ -4,9 +4,9 @@
 
 import Foundation
 
-extension SequenceType {
-    public func take(find: (Self.Generator.Element) -> Bool) -> Self.Generator.Element? {
-        var generator = self.generate()
+extension Sequence {
+    public func take(_ find: (Self.Iterator.Element) -> Bool) -> Self.Iterator.Element? {
+        var generator = self.makeIterator()
         while let elem = generator.next() {
             if (find(elem)) {
                 return elem

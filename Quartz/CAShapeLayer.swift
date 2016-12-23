@@ -21,15 +21,15 @@ extension CAShapeLayer {
         self.init(); self.set(fillColor: fillColor, strokeColor: strokeColor)
     }
     
-    public func set(fillColor fillColor: UIColor? = nil, strokeColor: UIColor? = nil) {
-        self.fillColor = fillColor?.CGColor
-        self.strokeColor = strokeColor?.CGColor
+    public func set(fillColor: UIColor? = nil, strokeColor: UIColor? = nil) {
+        self.fillColor = fillColor?.cgColor
+        self.strokeColor = strokeColor?.cgColor
     }
     
 }
-public class ShapeLayer: CALayer {
+open class ShapeLayer: CALayer {
     
-    public let maskLayer = CAShapeLayer()
+    open let maskLayer = CAShapeLayer()
     
     override public init() {
         super.init(); self.mask = self.maskLayer

@@ -11,6 +11,6 @@ extension UIWindow {
     }
 
     public convenience init(frame: CGRect, windowLevel: UIWindowLevel, backgroundColor: UIColor) {
-        self.init(frame: frame, windowLevel: windowLevel); self.backgroundColor = UIColor.redColor()
+        self.init(frame: frame, windowLevel: windowLevel); self.backgroundColor = UIColor.red
     }
 }

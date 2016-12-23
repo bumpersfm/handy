@@ -11,7 +11,7 @@ import UIKit
 
 extension UIButton {
     public convenience init(title: String) {
-        self.init(); self.setTitle(title, forState: .Normal)
+        self.init(); self.setTitle(title, for: UIControlState())
     }
     public convenience init(title: String, font: UIFont) {
         self.init(title: title)
@@ -20,7 +20,7 @@ extension UIButton {
     
     public convenience init(title: String, font: UIFont, color: UIColor) {
         self.init(title: title, font: font)
-        self.setTitleColor(color, forState: .Normal)
+        self.setTitleColor(color, for: UIControlState())
     }
     
     public convenience init(title: String, backgroundColor: UIColor) {
@@ -38,21 +38,21 @@ extension UIButton {
     }
     
     public convenience init(title: String, titleColor: UIColor) {
-        self.init(title: title); self.setTitleColor(titleColor, forState: .Normal)
+        self.init(title: title); self.setTitleColor(titleColor, for: UIControlState())
     }
     
     public convenience init(attributedTitle: NSAttributedString) {
         self.init()
-        self.setAttributedTitle(attributedTitle, forState: .Normal)
+        self.setAttributedTitle(attributedTitle, for: UIControlState())
     }
     
     public convenience init(image: UIImage?) {
         self.init()
-        self.setImage(image, forState: .Normal)
+        self.setImage(image, for: UIControlState())
     }
     
     public convenience init(image: UIImage?, selectedImage: UIImage?) {
-        self.init(image: image); self.setImage(selectedImage, forState: .Selected)
+        self.init(image: image); self.setImage(selectedImage, for: .selected)
     }
     
     public convenience init(image: UIImage?, contentEdgeInsets: UIEdgeInsets) {
@@ -62,7 +62,7 @@ extension UIButton {
     
     public convenience init(userInteractionEnabled: Bool) {
         self.init()
-        self.userInteractionEnabled = userInteractionEnabled
+        self.isUserInteractionEnabled = userInteractionEnabled
     }
     
     // MARK:
@@ -73,9 +73,9 @@ extension UIButton {
     
     // MARK: Attributed strings
     
-    public var attributes: [String: AnyObject]? {
+    public var attributes: [String: Any]? {
         set {
-            guard let newValue = newValue, current = self.attributedTitle else { return }
+            guard let newValue = newValue, let current = self.attributedTitle else { return }
             self.attributedTitle = NSAttributedString(string: current.string, attributes: newValue)
         }
         get { return self.attributesForState(self.state) }
@@ -83,21 +83,21 @@ extension UIButton {
     
     public var attributedTitle: NSAttributedString? {
         get { return self.currentAttributedTitle }
-        set { self.setAttributedTitle(newValue, forState: self.state) }
+        set { self.setAttributedTitle(newValue, for: self.state) }
     }
     
-    public func replaceAttribute(attribute: String, value: AnyObject?) {
+    public func replaceAttribute(_ attribute: String, value: AnyObject?) {
         guard let string = self.currentMutableAttributedTitle else { return }
         string.replaceAttribute(attribute, value: value)
         self.attributedTitle = string
     }
     
-    func attributesForState(state: UIControlState) -> [String: AnyObject]? {
-        guard let string = self.attributedTitleForState(state) else { return nil }
-        return string.attributesAtIndex(0, longestEffectiveRange: nil, inRange: NSMakeRange(0, string.length))
+    func attributesForState(_ state: UIControlState) -> [String: Any]? {
+        guard let string = self.attributedTitle(for: state) else { return nil }
+        return string.attributes(at: 0, longestEffectiveRange: nil, in: NSMakeRange(0, string.length))
     }
     
-    private var currentMutableAttributedTitle: NSMutableAttributedString? {
+    fileprivate var currentMutableAttributedTitle: NSMutableAttributedString? {
         return self.currentAttributedTitle?.mutableCopy() as? NSMutableAttributedString
     }
 }

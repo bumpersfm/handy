@@ -6,17 +6,17 @@ import Foundation
 import UIKit
 import QuartzCore
 
-public class ShapeButton: UIButton {
+open class ShapeButton: UIButton {
     
-    override public class func layerClass() -> AnyClass { return ShapeLayer.self }
+    override open class var layerClass : AnyClass { return ShapeLayer.self }
     
-    public var shapeLayer: CAShapeLayer { return self.shapingLayer!.maskLayer }
-    public var shapingLayer: ShapeLayer? { return self.layer as? ShapeLayer }
+    open var shapeLayer: CAShapeLayer { return self.shapingLayer!.maskLayer }
+    open var shapingLayer: ShapeLayer? { return self.layer as? ShapeLayer }
     
     // MARK: Convenience
     
     convenience public init(path: UIBezierPath) {
-        self.init(); self.shapeLayer.path = path.CGPath
+        self.init(); self.shapeLayer.path = path.cgPath
     }
     
 }

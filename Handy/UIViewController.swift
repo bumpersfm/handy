@@ -22,37 +22,37 @@ extension UIViewController {
         self.init(title: title); self.view.backgroundColor = color
     }
 
-    public func dismiss(sender: AnyObject? = nil) {
+    public func dismiss(_ sender: AnyObject? = nil) {
         self.dismiss(animated: true)
     }
 
-    public func dismiss(animated animated: Bool) {
+    public func dismiss(animated: Bool) {
         if self.presentingViewController != nil {
-            self.dismissViewControllerAnimated(animated, completion: nil)
+            self.dismiss(animated: animated, completion: nil)
         } else if let nav = self.navigationController {
-            nav.popViewControllerAnimated(animated)
+            nav.popViewController(animated: animated)
         }
     }
 
     // MARK:
 
-    public func tabBarItem(tabBarItem: UITabBarItem? = nil) -> Self {
+    public func tabBarItem(_ tabBarItem: UITabBarItem? = nil) -> Self {
         self.tabBarItem = tabBarItem ?? UITabBarItem(title: self.title ?? ""); return self
     }
 
-    public func withTitle(title: String) -> Self {
+    public func withTitle(_ title: String) -> Self {
         self.title = title; return self
     }
 
 
     public static var stringIdentifier: String {
-        return String(self)
+        return String(describing: self)
     }
 }
 
 extension UINavigationController {
     public convenience init(rootViewController: UIViewController, navigationBarHidden: Bool) {
         self.init(rootViewController: rootViewController)
-        self.navigationBarHidden = navigationBarHidden
+        self.isNavigationBarHidden = navigationBarHidden
     }
 }

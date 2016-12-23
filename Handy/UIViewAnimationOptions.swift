@@ -6,11 +6,11 @@ import Foundation
 import UIKit
 
 public struct AnimationOptions {
-    let duration: NSTimeInterval
-    let delay: NSTimeInterval
+    let duration: TimeInterval
+    let delay: TimeInterval
     let options: UIViewAnimationOptions
 
-    public init(duration: NSTimeInterval = 0.4, delay: NSTimeInterval = 0, options: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: 0)) {
+    public init(duration: TimeInterval = 0.4, delay: TimeInterval = 0, options: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: 0)) {
         self.duration = duration
         self.delay = delay
         self.options = options
@@ -18,7 +18,7 @@ public struct AnimationOptions {
 }
 
 extension UIView {
-    public class func animateWithOptions(options: AnimationOptions, animations: () -> Void, completion: ((Bool) -> Void)? = nil) {
-        self.animateWithDuration(options.duration, delay: options.delay, options: options.options, animations: animations, completion: completion)
+    public class func animateWithOptions(_ options: AnimationOptions, animations: @escaping () -> Void, completion: ((Bool) -> Void)? = nil) {
+        self.animate(withDuration: options.duration, delay: options.delay, options: options.options, animations: animations, completion: completion)
     }
 }

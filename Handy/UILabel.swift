@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 extension UILabel {
-    public convenience init(font: UIFont, color: UIColor = UIColor.blackColor()) {
+    public convenience init(font: UIFont, color: UIColor = UIColor.black) {
         self.init(); self.font = font; self.textColor = color
     }
     
@@ -40,7 +40,7 @@ extension UILabel {
     
     public func set(attributedString string: String) {
         if let attributedText = self.attributedText {
-            self.attributedText = NSAttributedString(string: string, attributes: attributedText.attributesAtIndex(0, longestEffectiveRange: nil, inRange: NSMakeRange(0, attributedText.length)))
+            self.attributedText = NSAttributedString(string: string, attributes: attributedText.attributes(at: 0, longestEffectiveRange: nil, in: NSMakeRange(0, attributedText.length)))
         }
     }
 

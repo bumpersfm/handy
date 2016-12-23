@@ -5,27 +5,27 @@
 import Foundation
 import UIKit
 
-public class CustomTitleView: ControlBar {
+open class CustomTitleView: ControlBar {
     
-    public let textLabel = UILabel(title: "Title", color: UIColor.whiteColor(), font: UIFont.boldSystemFontOfSize(24.0))
-    public let detailTextLabel = UILabel(title: "Subtitle", color: UIColor.whiteColor(), font: UIFont.boldSystemFontOfSize(12.0))
+    open let textLabel = UILabel(title: "Title", font: UIFont.boldSystemFont(ofSize: 24.0), color: UIColor.white)
+    open let detailTextLabel = UILabel(title: "Subtitle", font: UIFont.boldSystemFont(ofSize: 12.0), color: UIColor.white)
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.textLabel.textAlignment = .Left
-        self.textLabel.setContentHuggingPriority(1000, forAxis: .Vertical)
-        self.textLabel.setContentCompressionResistancePriority(1000, forAxis: .Horizontal)
+        self.textLabel.textAlignment = .left
+        self.textLabel.setContentHuggingPriority(1000, for: .vertical)
+        self.textLabel.setContentCompressionResistancePriority(1000, for: .horizontal)
         self.textLabel.numberOfLines = 1
         
-        self.detailTextLabel.textAlignment = .Left
-        self.detailTextLabel.setContentHuggingPriority(1000, forAxis: .Vertical)
-        self.detailTextLabel.setContentCompressionResistancePriority(1000, forAxis: .Horizontal)
+        self.detailTextLabel.textAlignment = .left
+        self.detailTextLabel.setContentHuggingPriority(1000, for: .vertical)
+        self.detailTextLabel.setContentCompressionResistancePriority(1000, for: .horizontal)
         
-        let stack = UIStackView(axis: .Vertical)
+        let stack = UIStackView(axis: .vertical)
         stack.addArrangedSubviews([self.textLabel, self.detailTextLabel])
         stack.preservesSuperviewLayoutMargins = true
-        stack.layoutMarginsRelativeArrangement = true
+        stack.isLayoutMarginsRelativeArrangement = true
         
         self.translatesAutoresizingMaskIntoConstraints = false
         self.titleView = stack
@@ -51,16 +51,16 @@ public class CustomTitleView: ControlBar {
         let estimatedItemWidth: CGFloat = 50
         let target = CGSize(width: vc.view.frame.size.width - (estimatedItemWidth * 2), height: self.titleView.frame.size.height)
         self.textLabel.preferredMaxLayoutWidth = target.width
-        let fittingSize = self.titleView.systemLayoutSizeFittingSize(target, withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityRequired)
+        let fittingSize = self.titleView.systemLayoutSizeFitting(target, withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityRequired)
         self.frame.size.width = fittingSize.width
     }
     
-    public var title: String? {
+    open var title: String? {
         set { self.textLabel.text = newValue }
         get { return self.textLabel.text }
     }
     
-    public var subtitle: String? {
+    open var subtitle: String? {
         set { self.detailTextLabel.text = newValue }
         get { return self.detailTextLabel.text }
     }
@@ -72,11 +72,11 @@ extension UIView {
     func systemLayout() {
         let frame = self.frame
         
-        let compressedSize = self.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+        let compressedSize = self.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
         Swift.print("compressedSize = \(compressedSize)")
         assert(self.frame == frame)
         
-        let expandedSize = self.systemLayoutSizeFittingSize(UILayoutFittingExpandedSize)
+        let expandedSize = self.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
         Swift.print("expandedSize = \(expandedSize)")
         assert(self.frame == frame)
     }

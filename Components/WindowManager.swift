@@ -5,25 +5,25 @@
 import Foundation
 import UIKit
 
-public class WindowManager: NSObject {
+open class WindowManager: NSObject {
 
-    public static let shared = WindowManager()
+    open static let shared = WindowManager()
 
-    private var windows = [UIWindow]()
+    fileprivate var windows = [UIWindow]()
 
-    public func show(window: UIWindow) {
+    open func show(_ window: UIWindow) {
         self.windows.append(window)
-        window.hidden = false
+        window.isHidden = false
     }
 
-    public func makeKeyAndVisible(window window: UIWindow) {
+    open func makeKeyAndVisible(window: UIWindow) {
         self.windows.append(window)
         window.makeKeyAndVisible()
     }
 
-    public func remove(window window: UIWindow) {
-        window.hidden = true
-        guard let index = self.windows.indexOf(window) else { return }
-        self.windows.removeAtIndex(index)
+    open func remove(window: UIWindow) {
+        window.isHidden = true
+        guard let index = self.windows.index(of: window) else { return }
+        self.windows.remove(at: index)
     }
 }

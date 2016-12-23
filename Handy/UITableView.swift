@@ -8,6 +8,6 @@ import UIKit
 extension UITableViewCell {
 
     public static var identifier: String {
-        return String(self)
+        return String(describing: self)
     }
 }

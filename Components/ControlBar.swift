@@ -5,38 +5,38 @@
 import Foundation
 import UIKit
 
-public class ControlBar: UIView {
+open class ControlBar: UIView {
 
-    public var titleView = UIView() {
+    open var titleView = UIView() {
         didSet { self.update(titleView: self.titleView, oldValue: oldValue) }
     }
 
-    public var leftViews = [UIView]() {
+    open var leftViews = [UIView]() {
         didSet { self.update(leftViews: self.leftViews, oldValue: oldValue) }
     }
 
-    public var rightViews = [UIView]() {
+    open var rightViews = [UIView]() {
         didSet { self.update(rightViews: self.rightViews, oldValue: oldValue) }
     }
 
 
-    private let stack = UIStackView(axis: .Horizontal)
+    fileprivate let stack = UIStackView(axis: .horizontal)
 
     // MARK: Init
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        self.layoutMargins = UIEdgeInsetsZero
+        self.layoutMargins = UIEdgeInsets.zero
         self.stack.preservesSuperviewLayoutMargins = true
-        self.stack.layoutMarginsRelativeArrangement = true
+        self.stack.isLayoutMarginsRelativeArrangement = true
         self.stack.addArrangedSubview(self.titleView)
 
         self.addView(self.stack)
-        NSLayoutConstraint.activateConstraints([
-            self.layoutMarginsGuide.leadingAnchor.constraintEqualToAnchor(stack.leadingAnchor),
-            self.layoutMarginsGuide.trailingAnchor.constraintEqualToAnchor(stack.trailingAnchor),
-            self.layoutMarginsGuide.topAnchor.constraintEqualToAnchor(stack.topAnchor),
-            self.layoutMarginsGuide.bottomAnchor.constraintEqualToAnchor(stack.bottomAnchor)
+        NSLayoutConstraint.activate([
+            self.layoutMarginsGuide.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
+            self.layoutMarginsGuide.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
+            self.layoutMarginsGuide.topAnchor.constraint(equalTo: stack.topAnchor),
+            self.layoutMarginsGuide.bottomAnchor.constraint(equalTo: stack.bottomAnchor)
         ])
     }
 
@@ -46,21 +46,21 @@ public class ControlBar: UIView {
 
     // MARK: Private methods
 
-    private func update(leftViews views: [UIView], oldValue old: [UIView]) {
+    fileprivate func update(leftViews views: [UIView], oldValue old: [UIView]) {
         self.stack.removeArrangedSubviews(old)
         old.forEach({ $0.removeFromSuperview() })
-        views.reverse().forEach({ self.stack.insertArrangedSubview($0, atIndex: 0) })
+        views.reversed().forEach({ self.stack.insertArrangedSubview($0, at: 0) })
     }
 
-    private func update(rightViews views: [UIView], oldValue old: [UIView]) {
+    fileprivate func update(rightViews views: [UIView], oldValue old: [UIView]) {
         self.stack.removeArrangedSubviews(old)
         old.forEach({ $0.removeFromSuperview() })
         self.stack.addArrangedSubviews(views)
     }
 
-    private func update(titleView view: UIView, oldValue old: UIView) {
-        if let index = self.stack.arrangedSubviews.indexOf(old) {
-            self.stack.insertArrangedSubview(view, atIndex: index)
+    fileprivate func update(titleView view: UIView, oldValue old: UIView) {
+        if let index = self.stack.arrangedSubviews.index(of: old) {
+            self.stack.insertArrangedSubview(view, at: index)
             self.stack.removeArrangedSubview(old)
             old.removeFromSuperview()
         }

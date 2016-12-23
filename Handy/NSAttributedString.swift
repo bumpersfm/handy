@@ -7,13 +7,13 @@ import UIKit
 
 extension NSMutableAttributedString {
     
-    public func replaceAttribute(attribute: String, value: AnyObject?) {
+    public func replaceAttribute(_ attribute: String, value: Any?) {
         guard var attributes = self.attributes else { return }
-        if let value = value { attributes[attribute] = value } else { attributes.removeValueForKey(attribute) }
+        if let value = value { attributes[attribute] = value } else { attributes.removeValue(forKey: attribute) }
         self.attributes = attributes
     }
     
-    override public var attributes: [String:AnyObject]? {
+    override public var attributes: [String: Any]? {
         get { return super.attributes }
         set {
             guard self.length > 0, let newValue = newValue else { return }
@@ -24,11 +24,11 @@ extension NSMutableAttributedString {
 }
 
 extension NSAttributedString {
-    private var stringRange: NSRange { return NSMakeRange(0, self.length) }
+    fileprivate var stringRange: NSRange { return NSMakeRange(0, self.length) }
     
-    public var attributes: [String:AnyObject]? {
+    public var attributes: [String: Any]? {
         guard self.length > 0 else { return nil }
-        return self.attributesAtIndex(0, longestEffectiveRange: nil, inRange: self.stringRange)
+        return self.attributes(at: 0, longestEffectiveRange: nil, in: self.stringRange)
     }
 }
 
